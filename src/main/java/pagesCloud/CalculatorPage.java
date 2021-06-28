@@ -59,10 +59,10 @@ public class CalculatorPage extends BasePage {
     @FindBy(xpath = "//md-select[@placeholder='GPU type']//md-select-value")
     private WebElement GPUType;
 
-    @FindBy(xpath = "//div[@id='select_container_375']//md-option")
+    @FindBy(css = "md-option[value*='NVIDIA_TESLA']")
     private List<WebElement> GPUTypeOption;
 
-    @FindBy(xpath = "//md-select[@placeholder='Local SSD']")
+    @FindBy(xpath = "//md-select[@placeholder='Local SSD']//md-select-value")
     private WebElement localSSD;
 
     @FindBy(xpath = "//div[@class='md-text' and text()='24x375 GB']")
@@ -158,7 +158,9 @@ public class CalculatorPage extends BasePage {
         addGPUs.click();
         choose(numberOfGPUs, numberOfGPUsDropbox, "4");
         choose(GPUType, GPUTypeOption, "NVIDIA Tesla V100");
+        wait.until(ExpectedConditions.elementToBeClickable(localSSD));
         localSSD.click();
+        wait.until(ExpectedConditions.elementToBeClickable(localSSDType));
         localSSDType.click();
         datacenterLocation.click();
         wait.until(ExpectedConditions.elementToBeClickable(datacenterLocationOption));
