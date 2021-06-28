@@ -28,10 +28,10 @@ public class CalculatorPage extends BasePage {
     @FindBy(xpath = "//md-select[@placeholder='VM Class']//md-select-value")
     private WebElement machineClass;
 
-    @FindBy(xpath = "//div[@class='md-select-menu-container md-active md-clickable']//md-content//md-option")
+    @FindBy(xpath = "//div[@id='select_container_82']//md-option//div")
     private List<WebElement> machineClassOption;
 
-    @FindBy(id = "select_value_label_62")
+    @FindBy(xpath = "//label[text()='Machine type']/parent::md-input-container")
     private WebElement machineType;
 
     @FindBy(xpath = "//md-optgroup[@label='standard']//md-option")
@@ -71,7 +71,7 @@ public class CalculatorPage extends BasePage {
     @FindBy(xpath = "//form[@name='SoleTenantForm']//md-select[@placeholder='Datacenter location']//div[@class='md-text ng-binding']")
     private WebElement datacenterLocation;
 
-    @FindBy(xpath = "//md-select-menu[@class='md-overflow']//md-option[@value='europe-west3']//div[@class='md-text ng-binding']")
+    @FindBy(xpath = "//md-select-menu[@class='md-overflow']//md-option[@value='europe-west3']//div[contains(text(),'Frankfurt')]")
     private WebElement datacenterLocationOption;
 
     @FindBy(xpath = "(//md-select[@placeholder='Committed usage'])[2]")
@@ -161,6 +161,7 @@ public class CalculatorPage extends BasePage {
         localSSD.click();
         localSSDType.click();
         datacenterLocation.click();
+        wait.until(ExpectedConditions.elementToBeClickable(datacenterLocationOption));
         datacenterLocationOption.click();
         choose(commitedUsage, commitedUsageOption, "1 Year");
     }
@@ -189,9 +190,10 @@ public class CalculatorPage extends BasePage {
     }
 
     public void choose(WebElement element, List<WebElement> elementList, String text) {
+        wait.until(ExpectedConditions.elementToBeClickable(element));
         element.click();
-        wait.until(ExpectedConditions.visibilityOfAllElements(elementList));
         for (WebElement option : elementList) {
+            wait.until(ExpectedConditions.visibilityOf(option));
             if (option.getText().replaceAll("\\s+", "").
                     contains(text.replaceAll("\\s+", ""))) {
                 option.click();
