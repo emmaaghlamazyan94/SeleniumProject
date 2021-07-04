@@ -19,7 +19,7 @@ public class CalculatorPage extends BasePage {
     @FindBy(name = "label")
     private WebElement whatAreFor;
 
-    @FindBy(id = "select_value_label_58")
+    @FindBy(xpath = "//md-select[contains(@aria-label,'Operating')]")
     private WebElement OS;
 
     @FindBy(xpath = "//md-option[@class='md-ink-ripple']")
@@ -28,10 +28,10 @@ public class CalculatorPage extends BasePage {
     @FindBy(xpath = "//md-select[@placeholder='VM Class']//md-select-value")
     private WebElement machineClass;
 
-    @FindBy(xpath = "//div[@id='select_container_82']//md-option//div")
+    @FindBy(xpath = "//div[@class='md-select-menu-container md-active md-clickable']//md-option")
     private List<WebElement> machineClassOption;
 
-    @FindBy(xpath = "//label[text()='Machine type']/parent::md-input-container")
+    @FindBy(xpath = "//md-select[@placeholder='Instance type']")
     private WebElement machineType;
 
     @FindBy(xpath = "//md-optgroup[@label='standard']//md-option")
@@ -77,7 +77,7 @@ public class CalculatorPage extends BasePage {
     @FindBy(xpath = "(//md-select[@placeholder='Committed usage'])[2]")
     private WebElement commitedUsage;
 
-    @FindBy(xpath = "//div[@id='select_container_127']//md-option")
+    @FindBy(xpath = "//div[@class='md-select-menu-container md-active md-clickable']//md-option")
     private List<WebElement> commitedUsageOption;
 
     @FindBy(xpath = "//form[@name='ComputeEngineForm']//button[@aria-label='Add to Estimate']")
@@ -111,6 +111,9 @@ public class CalculatorPage extends BasePage {
 
     @FindBy(xpath = "//button[@aria-label='Send Email']")
     private WebElement sendEmailToGeneratedMail;
+
+    @FindBy(xpath = "//h2[@class='md-title']//b")
+    private WebElement totalCost;
 
     public String getActualMachineClassOption() {
         return actualMachineClassOption.getText().toLowerCase();
@@ -175,7 +178,7 @@ public class CalculatorPage extends BasePage {
     }
 
     public String getActualTotalCost() {
-        return driver.findElement(By.xpath("//h2[@class='md-title']//b")).getText();
+        return totalCost.getText();
     }
 
     public void email() {
