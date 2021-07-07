@@ -30,6 +30,11 @@
             <artifactId>webdrivermanager</artifactId>
             <version>4.4.3</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium.grid/selenium-grid-hub -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium.grid</groupId>
+            <artifactId>selenium-grid-hub</artifactId>
+            <version>1.0.5</version>
+        </dependency>
     </dependencies>
 </project>
