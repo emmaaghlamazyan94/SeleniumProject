@@ -3,6 +3,7 @@ package pagesCloud;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -27,7 +28,10 @@ public class HomePage extends BasePage {
     private List<WebElement> links;
 
     public void searchCalculator() {
-        search.sendKeys("Google Cloud Platform Pricing Calculator" + Keys.ENTER);
+        Actions actions = new Actions(driver);
+        actions.sendKeys(search, "Google Cloud Platform Pricing Calculator" + Keys.ENTER)
+                .build()
+                .perform();
         waitLinksAppeared();
         searchedLink.click();
     }

@@ -1,6 +1,7 @@
 package pagesCloud;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -39,7 +40,8 @@ public class TabPage extends BasePage {
         driver.switchTo().window(tabs.get(1));
         driver.get("https://tempmailgen.com/");
         wait.until(ExpectedConditions.elementToBeClickable(copyButton));
-        copyButton.click();
+        Actions actions = new Actions(driver);
+        actions.click(copyButton).build().perform();
         driver.switchTo().window(tabs.get(0));
     }
 
