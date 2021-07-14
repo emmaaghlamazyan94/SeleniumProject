@@ -1,7 +1,10 @@
+package pastebin;
+
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pagesPastebin.CreatedPastePage;
 import pagesPastebin.HomePage;
+import pastebin.BaseTestPastebin;
 
 public class ICanWin extends BaseTestPastebin {
     private String pasteExpirationOption = "10 Minutes";

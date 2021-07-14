@@ -34,27 +34,35 @@ public class TabPage extends BasePage {
     @FindBy(xpath = "//tr[@id='mobilepadding']//h2")
     private WebElement message;
 
-    public void generateEmail() {
+    @FindBy(id = "ajax")
+    private WebElement totalCostMessage;
+
+    public CalculatorPage generateEmail() {
         ((JavascriptExecutor) driver).executeScript("window.open()");
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
         driver.get("https://tempmailgen.com/");
         wait.until(ExpectedConditions.elementToBeClickable(copyButton));
+        log.info("Email is generated and copied");
         Actions actions = new Actions(driver);
         actions.click(copyButton).build().perform();
         driver.switchTo().window(tabs.get(0));
+        return new CalculatorPage(driver);
     }
 
-    public void getSentEmail() {
+    public TabPage getSentEmail() {
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
         wait.until(ExpectedConditions.visibilityOf(inbox));
         inbox.click();
+        log.debug("There is problem with getting sent email");
+        return new TabPage(driver);
     }
 
     public String getMessageTotalCost() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ajax")));
+        wait.until(ExpectedConditions.visibilityOf(totalCostMessage));
         driver.switchTo().frame(frame);
+        log.error("Error: message is not received");
         return message.getText();
     }
 }

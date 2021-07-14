@@ -1,8 +1,10 @@
 package pagesCloud;
 
+import model.Calculator;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import service.CalculatorCreation;
 
 import java.util.List;
 
@@ -22,10 +24,10 @@ public class CalculatorPage extends BasePage {
     @FindBy(xpath = "//md-select[contains(@aria-label,'Operating')]")
     private WebElement OS;
 
-    @FindBy(xpath = "//md-option[@class='md-ink-ripple']")
+    @FindBy(xpath = "//div[@class='md-select-menu-container md-active md-clickable']//md-option")
     private List<WebElement> OSoptions;
 
-    @FindBy(xpath = "//md-select[@placeholder='VM Class']//md-select-value")
+    @FindBy(xpath = "//md-select[@placeholder='VM Class']")
     private WebElement machineClass;
 
     @FindBy(xpath = "//div[@class='md-select-menu-container md-active md-clickable']//md-option")
@@ -131,27 +133,26 @@ public class CalculatorPage extends BasePage {
         return actualRegion.getText();
     }
 
-    public void switchToFrame() {
+    public CalculatorPage switchToFrame() {
         driver.switchTo().frame(firstFrame).switchTo().frame(secondFrame);
+        log.info("Switched to frame");
+        return new CalculatorPage(driver);
     }
 
-    public void createCalculator(String OSoption, String machineClassOptionText, String machineTypeOptionText) {
-        instances(OSoption, machineClassOptionText, machineTypeOptionText);
+    public CalculatorPage createCalculator() {
+        Calculator calculator = CalculatorCreation.calculatorData();
+        instances(calculator);
         soleTenantNodes();
+        return new CalculatorPage(driver);
     }
 
-    public void instances(String OSoption, String machineClassOptionText, String machineTypeOptionText) {
+    public void instances(Calculator calculator) {
         numberOfInstances.sendKeys("4");
         whatAreFor.sendKeys("");
-        OS.click();
-        for (WebElement option : OSoptions) {
-            if (option.getText().equals(OSoption)) {
-                option.click();
-                break;
-            }
-        }
-        choose(machineClass, machineClassOption, machineClassOptionText);
-        choose(machineType, machineTypeOption, machineTypeOptionText);
+        choose(OS, OSoptions, calculator.getOSoption());
+        wait.until(ExpectedConditions.invisibilityOfAllElements(OSoptions));
+        choose(machineClass, machineClassOption, calculator.getMachineClassOptionText());
+        choose(machineType, machineTypeOption, calculator.getMachineTypeOptionText());
         js.executeScript("window.scrollBy(0,3000)");
     }
 
@@ -171,27 +172,32 @@ public class CalculatorPage extends BasePage {
         choose(commitedUsage, commitedUsageOption, "1 Year");
     }
 
-    public void setAddToEstimate() {
+    public CalculatorPage setAddToEstimate() {
         addToEstimate2.click();
         addToEstimate1.click();
         wait.until(ExpectedConditions.visibilityOf(addToEstimateBar));
+        log.info("Added to estimation");
+        return new CalculatorPage(driver);
     }
 
     public String getActualTotalCost() {
         return totalCost.getText();
     }
 
-    public void email() {
+    public TabPage email() {
         sendEmail.click();
+        return new TabPage(driver);
     }
 
-    public void sendEmail() {
+    public CalculatorPage sendEmail() {
         driver.switchTo().frame(firstFrame).switchTo().frame(secondFrame);
         js.executeScript("window.scrollBy(0,1200)");
         wait.until(ExpectedConditions.visibilityOf(emailField));
         emailField.sendKeys(Keys.chord(Keys.CONTROL, "v"));
         wait.until(ExpectedConditions.elementToBeClickable(sendEmailToGeneratedMail));
         sendEmailToGeneratedMail.click();
+        log.info("Email is sent");
+        return new CalculatorPage(driver);
     }
 
     public void choose(WebElement element, List<WebElement> elementList, String text) {
