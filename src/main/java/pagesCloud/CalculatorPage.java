@@ -24,7 +24,7 @@ public class CalculatorPage extends BasePage {
     @FindBy(xpath = "//md-select[contains(@aria-label,'Operating')]")
     private WebElement OS;
 
-    @FindBy(xpath = "//div[@class='md-select-menu-container md-active md-clickable']//md-option")
+    @FindBy(xpath = "//div[@class='md-select-menu-container md-active md-clickable']//md-option//div")
     private List<WebElement> OSoptions;
 
     @FindBy(xpath = "//md-select[@placeholder='VM Class']")
@@ -204,7 +204,7 @@ public class CalculatorPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(element));
         element.click();
         for (WebElement option : elementList) {
-            wait.until(ExpectedConditions.visibilityOf(option));
+            wait.until(ExpectedConditions.elementToBeClickable(option));
             if (option.getText().replaceAll("\\s+", "").
                     contains(text.replaceAll("\\s+", ""))) {
                 option.click();

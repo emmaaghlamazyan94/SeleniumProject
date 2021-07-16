@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 
 public class TestListener implements ITestListener {
+
     protected Logger log = LogManager.getRootLogger();
 
     @Override

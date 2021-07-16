@@ -43,7 +43,7 @@ public class TabPage extends BasePage {
         driver.switchTo().window(tabs.get(1));
         driver.get("https://tempmailgen.com/");
         wait.until(ExpectedConditions.elementToBeClickable(copyButton));
-        log.info("Email is generated and copied");
+        log.debug("Email is generated and copied");
         Actions actions = new Actions(driver);
         actions.click(copyButton).build().perform();
         driver.switchTo().window(tabs.get(0));

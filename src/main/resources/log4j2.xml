@@ -6,16 +6,21 @@
                 <Pattern>%d %p %c{2} [%t] %l %m%n</Pattern>
             </PatternLayout>
         </Console>
-        <File name="File" fileName="target/logs/google_cloud_calculator">
+        <RollingFile name="RollingFile"
+                     filePattern="target/logs/google_calculator_%d{yyyy-MM-dd}.log">
             <PatternLayout>
-                <Pattern>%d %p %c{2} [%t] %m%n</Pattern>
+                <pattern>%level\t%d{yyyy-MM-dd HH:mm:ss} %c: %m%n</pattern>
             </PatternLayout>
-        </File>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <OnStartupTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
     </Appenders>
     <Loggers>
-        <Root level="trace">
+        <Root level="TRACE">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
+            <AppenderRef ref="RollingFile"/>
         </Root>
     </Loggers>
 </Configuration>
