@@ -9,7 +9,7 @@ import pagesCloud.HomePage;
 import utils.TestListener;
 
 @Listeners(TestListener.class)
-public class BaseTestCloud{
+public class BaseTestCloud {
     WebDriver driver;
 
     @BeforeMethod

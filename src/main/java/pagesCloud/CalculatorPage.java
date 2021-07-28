@@ -18,9 +18,6 @@ public class CalculatorPage extends BasePage {
     @FindBy(xpath = "(//input[@aria-label='quantity'])[1]")
     private WebElement numberOfInstances;
 
-    @FindBy(name = "label")
-    private WebElement whatAreFor;
-
     @FindBy(xpath = "//md-select[contains(@aria-label,'Operating')]")
     private WebElement OS;
 
@@ -148,7 +145,6 @@ public class CalculatorPage extends BasePage {
 
     public void instances(Calculator calculator) {
         numberOfInstances.sendKeys("4");
-        whatAreFor.sendKeys("");
         choose(OS, OSoptions, calculator.getOSoption());
         wait.until(ExpectedConditions.invisibilityOfAllElements(OSoptions));
         choose(machineClass, machineClassOption, calculator.getMachineClassOptionText());
@@ -200,7 +196,7 @@ public class CalculatorPage extends BasePage {
         return new CalculatorPage(driver);
     }
 
-    public void choose(WebElement element, List<WebElement> elementList, String text) {
+    private void choose(WebElement element, List<WebElement> elementList, String text) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
         element.click();
         for (WebElement option : elementList) {

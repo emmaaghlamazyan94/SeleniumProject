@@ -15,6 +15,7 @@ public class DriverSingleton {
             switch (System.getProperty("browser", "chrome")) {
                 case "firefox": {
                     decorator = new FirefoxDriverCreator();
+                    break;
                 }
                 default: {
                     decorator = new ChromeDriverCreator();
