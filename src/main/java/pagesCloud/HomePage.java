@@ -45,7 +45,7 @@ public class HomePage extends BasePage {
         wait.until(ExpectedConditions.visibilityOf(header));
     }
 
-    public void waitLinksAppeared() {
+    private void waitLinksAppeared() {
         wait.until(ExpectedConditions.visibilityOfAllElements(links));
     }
 }

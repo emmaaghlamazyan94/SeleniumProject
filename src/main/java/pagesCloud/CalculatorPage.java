@@ -13,7 +13,7 @@ public class CalculatorPage extends BasePage {
         super(driver);
     }
 
-    JavascriptExecutor js = (JavascriptExecutor) driver;
+    private JavascriptExecutor js = (JavascriptExecutor) driver;
 
     @FindBy(xpath = "(//input[@aria-label='quantity'])[1]")
     private WebElement numberOfInstances;
@@ -85,8 +85,7 @@ public class CalculatorPage extends BasePage {
     @FindBy(xpath = "//div[@ng-if='listingCtrl.showSoleTenant']//button[@aria-label='Add to Estimate']")
     private WebElement addToEstimate2;
 
-    @FindBy(xpath =
-            "//md-content[@id='compute']//md-list-item[@class='md-1-line md-no-proxy ng-scope']//div[@class='md-list-item-text ng-binding']")
+    @FindBy(xpath = "//div[contains(text(),'VM class')]")
     private WebElement actualMachineClassOption;
 
     @FindBy(xpath =

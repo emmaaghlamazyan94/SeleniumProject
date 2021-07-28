@@ -10,7 +10,7 @@ import utils.TestListener;
 
 @Listeners(TestListener.class)
 public class BaseTestCloud {
-    WebDriver driver;
+    protected WebDriver driver;
 
     @BeforeMethod
     public void setUp() {

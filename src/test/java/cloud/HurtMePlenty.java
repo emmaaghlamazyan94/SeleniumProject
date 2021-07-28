@@ -1,6 +1,5 @@
 package cloud;
 
-import cloud.BaseTestCloud;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pagesCloud.CalculatorPage;
