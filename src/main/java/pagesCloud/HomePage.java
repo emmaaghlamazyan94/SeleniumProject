@@ -1,11 +1,13 @@
 package pagesCloud;
 
+import model.Calculator;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import service.CalculatorCreation;
 
 import java.util.List;
 
@@ -27,20 +29,23 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[@class='gs-title']//a[@target='_self']")
     private List<WebElement> links;
 
-    public void searchCalculator() {
+    public CalculatorPage searchCalculator() {
+        Calculator calculator = CalculatorCreation.calculatorData();
         Actions actions = new Actions(driver);
-        actions.sendKeys(search, "Google Cloud Platform Pricing Calculator" + Keys.ENTER)
+        actions.sendKeys(search, calculator.getSearchText() + Keys.ENTER)
                 .build()
                 .perform();
         waitLinksAppeared();
         searchedLink.click();
+        log.info("Link is opened");
+        return new CalculatorPage(driver);
     }
 
     public void waitPageLoad() {
         wait.until(ExpectedConditions.visibilityOf(header));
     }
 
-    public void waitLinksAppeared() {
+    private void waitLinksAppeared() {
         wait.until(ExpectedConditions.visibilityOfAllElements(links));
     }
 }

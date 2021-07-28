@@ -1,7 +1,10 @@
+package pastebin;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pagesPastebin.CreatedPastePage;
 import pagesPastebin.HomePage;
+import pastebin.BaseTestPastebin;
 
 public class BringItOn extends BaseTestPastebin {
     private String newPasteText = "git config --global user.name  \"New Sheriff in Town\"\n" +
