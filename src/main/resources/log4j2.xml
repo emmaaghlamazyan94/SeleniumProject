@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration packages="com.epam.ta.reportportal.log4j.appender" status="WARN">
     <Appenders>
-        <Console name="Console">
-            <PatternLayout>
-                <Pattern>%d %p %c{2} [%t] %l %m%n</Pattern>
-            </PatternLayout>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d [%t] %-5level %logger{36} - %msg%n%throwable"/>
         </Console>
-        <RollingFile name="RollingFile"
-                     filePattern="target/logs/google_calculator_%d{yyyy-MM-dd}.log">
-            <PatternLayout>
-                <pattern>%level\t%d{yyyy-MM-dd HH:mm:ss} %c: %m%n</pattern>
-            </PatternLayout>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <OnStartupTriggeringPolicy/>
-            </Policies>
-        </RollingFile>
+        <ReportPortalLog4j2Appender name="ReportPortalAppender">
+            <PatternLayout
+                    pattern="%d [%t] %-5level %logger{36} - %msg%n%throwable"/>
+        </ReportPortalLog4j2Appender>
     </Appenders>
     <Loggers>
-        <Root level="TRACE">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingFile"/>
+        <Root level="DEBUG">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="ReportPortalAppender"/>
         </Root>
+        <Logger name="com.epam.reportportal.service" level="WARN" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="ReportPortalAppender"/>
+        </Logger>
+        <Logger name="com.epam.reportportal.utils" level="WARN" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="ReportPortalAppender"/>
+        </Logger>
     </Loggers>
 </Configuration>
