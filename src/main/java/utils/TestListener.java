@@ -1,5 +1,6 @@
 package utils;
 
+import com.epam.reportportal.message.ReportPortalMessage;
 import driver.DriverSingleton;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -24,18 +25,33 @@ public class TestListener implements ITestListener {
         saveScreenshot();
     }
 
+    //    private void saveScreenshot() {
+//        File screenCapture = ((TakesScreenshot) DriverSingleton
+//                .getDriver())
+//                .getScreenshotAs(OutputType.FILE);
+//        try {
+//            FileUtils.copyFile(screenCapture, new File(
+//                    ".//target/screenshots/"
+//                            + getCurrentTimeAsString() +
+//                            ".png"));
+//        } catch (IOException e) {
+//            log.error("Failed to save screenshot: " + e.getLocalizedMessage());
+//        }
+//    }
+
     private void saveScreenshot() {
-        File screenCapture = ((TakesScreenshot) DriverSingleton
-                .getDriver())
-                .getScreenshotAs(OutputType.FILE);
+        ReportPortalMessage message = null;
         try {
-            FileUtils.copyFile(screenCapture, new File(
-                    ".//target/screenshots/"
-                            + getCurrentTimeAsString() +
-                            ".png"));
+            TakesScreenshot ts = (TakesScreenshot) DriverSingleton.getDriver();
+            File srcFile = ts.getScreenshotAs(OutputType.FILE);
+            java.util.Date d = new java.util.Date();
+            org.apache.commons.io.FileUtils.copyFile(srcFile, new File("./ScreenShots/" + d.toString().replace(":", "_") + ".png"));
+            String rp_message = "test message for ReportPortal" + getCurrentTimeAsString();
+            message = new ReportPortalMessage(srcFile, rp_message);
         } catch (IOException e) {
-            log.error("Failed to save screenshot: " + e.getLocalizedMessage());
+            e.printStackTrace();
         }
+        log.info(message);
     }
 
     private String getCurrentTimeAsString() {
