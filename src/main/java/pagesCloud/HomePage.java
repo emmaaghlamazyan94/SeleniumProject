@@ -12,20 +12,17 @@ import service.CalculatorCreation;
 import java.util.List;
 
 public class HomePage extends BasePage {
-
     public HomePage(WebDriver driver) {
         super(driver);
     }
 
+
     @FindBy(name = "q")
     private WebElement search;
-
     @FindBy(xpath = "//div[@class='gsc-thumbnail-inside']//a[@class='gs-title']//b[text()='Google Cloud Platform Pricing Calculator']")
     private WebElement searchedLink;
-
     @FindBy(className = "devsite-top-logo-row-wrapper-wrapper")
     private WebElement header;
-
     @FindBy(xpath = "//div[@class='gs-title']//a[@target='_self']")
     private List<WebElement> links;
 
@@ -37,7 +34,6 @@ public class HomePage extends BasePage {
                 .perform();
         waitLinksAppeared();
         searchedLink.click();
-        log.info("Link is opened");
         return new CalculatorPage(driver);
     }
 
