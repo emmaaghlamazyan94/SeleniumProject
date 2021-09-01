@@ -1,14 +1,18 @@
 package pagesCloud;
+
 import model.Calculator;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import service.CalculatorCreation;
+
 import java.util.List;
+
 public class CalculatorPage extends BasePage {
     public CalculatorPage(WebDriver driver) {
         super(driver);
     }
+
     private JavascriptExecutor js = (JavascriptExecutor) driver;
     @FindBy(xpath = "(//input[@aria-label='quantity'])[1]")
     private WebElement numberOfInstances;
@@ -76,28 +80,35 @@ public class CalculatorPage extends BasePage {
     private WebElement sendEmailToGeneratedMail;
     @FindBy(xpath = "//h2[@class='md-title']//b")
     private WebElement totalCost;
+
     public String getActualMachineClassOption() {
         return actualMachineClassOption.getText().toLowerCase();
     }
+
     public String getActualCommitmentTerm() {
         return actualCommitmentTerm.getText();
     }
+
     public String getActualInstanceType() {
         return actualInstanceType.getText();
     }
+
     public String getActualRegion() {
         return actualRegion.getText();
     }
+
     public CalculatorPage switchToFrame() {
         driver.switchTo().frame(firstFrame).switchTo().frame(secondFrame);
         return new CalculatorPage(driver);
     }
+
     public CalculatorPage createCalculator() {
         Calculator calculator = CalculatorCreation.calculatorData();
         instances(calculator);
         soleTenantNodes();
         return new CalculatorPage(driver);
     }
+
     public void instances(Calculator calculator) {
         numberOfInstances.sendKeys("4");
         choose(OS, OSoptions, calculator.getOSoption());
@@ -106,6 +117,7 @@ public class CalculatorPage extends BasePage {
         choose(machineType, machineTypeOption, calculator.getMachineTypeOptionText());
         js.executeScript("window.scrollBy(0,3000)");
     }
+
     public void soleTenantNodes() {
         numberOfNodes.sendKeys("1");
         wait.until(ExpectedConditions.visibilityOf(addGPUs));
@@ -121,19 +133,23 @@ public class CalculatorPage extends BasePage {
         datacenterLocationOption.click();
         choose(commitedUsage, commitedUsageOption, "1 Year");
     }
+
     public CalculatorPage setAddToEstimate() {
         addToEstimate2.click();
         addToEstimate1.click();
         wait.until(ExpectedConditions.visibilityOf(addToEstimateBar));
         return new CalculatorPage(driver);
     }
+
     public String getActualTotalCost() {
         return totalCost.getText();
     }
+
     public TabPage email() {
         sendEmail.click();
         return new TabPage(driver);
     }
+
     public CalculatorPage sendEmail() {
         driver.switchTo().frame(firstFrame).switchTo().frame(secondFrame);
         js.executeScript("window.scrollBy(0,1200)");
@@ -143,6 +159,7 @@ public class CalculatorPage extends BasePage {
         sendEmailToGeneratedMail.click();
         return new CalculatorPage(driver);
     }
+
     private void choose(WebElement element, List<WebElement> elementList, String text) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
         element.click();
